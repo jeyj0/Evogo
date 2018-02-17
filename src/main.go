@@ -34,9 +34,8 @@ func (n *Neuron) calculateValue() {
 	n.value = newValue
 }
 
-func (net *Net) calculateOutputs(inputs []float64) []float64 {
-	for _, neuron := range net.outputNeurons {
-		neuron.calculateValue()
-	}
-	return nil
+func (n *Neuron) calculateValueRecursive() {
+}
+
+func (net *Net) calculateOutputs() {
 }
