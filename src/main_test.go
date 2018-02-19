@@ -21,9 +21,18 @@ func TestCalculateValue(t *testing.T) {
 	outNeuron.calculateValue()
 
 	// then
-	if assert.NotNil(t, outNeuron.value) {
-		assert.Equal(t, 4.75, outNeuron.value)
-	}
+	assert.Equal(t, 4.75, outNeuron.value)
+}
+
+func TestCalculateValueInputNeuron(t *testing.T) {
+	// given
+	neuron := Neuron{value: 4, bias: 1, biasWeight: 2, inConnections: nil}
+
+	// when
+	neuron.calculateValue()
+
+	// then
+	assert.Equal(t, 2.0, neuron.value)
 }
 
 func TestCalculateValueRecursive(t *testing.T) {
@@ -40,6 +49,23 @@ func TestCalculateValueRecursive(t *testing.T) {
 
 	// then
 	assert.Equal(t, 3.0, output.value)
+}
+
+func TestCalculateValueRecursiveWithInputBias(t *testing.T) {
+	// given
+	input := Neuron{value: 1, bias: 2, biasWeight: 4, inConnections: nil}
+	middle := Neuron{value: 0, bias: 6, biasWeight: 10, inConnections: []*Connection{&Connection{inNeuron: &input, weight: 10}}}
+	output := Neuron{value: 0, bias: 3, biasWeight: 14, inConnections: []*Connection{&Connection{inNeuron: &middle, weight: 16}}}
+
+	// input: 1.8
+	// middle: 3.9
+	// output: 3.48
+
+	// when
+	output.calculateValueRecursive()
+
+	// then
+	assert.Equal(t, 3.48, output.value)
 }
 
 func TestCalculateOutputs(t *testing.T) {
@@ -66,4 +92,29 @@ func TestCalculateOutputs(t *testing.T) {
 	// then
 	assert.Equal(t, 4.3125, net.outputNeurons[0].value)
 	assert.Equal(t, 5.3, net.outputNeurons[1].value)
+}
+
+func TestCalculateOutputsWithInputBias(t *testing.T) {
+	// given
+	input1 := Neuron{value: 1, bias: 2, biasWeight: 1, inConnections: nil} // 1.5
+	input2 := Neuron{value: 2, bias: 4, biasWeight: 1, inConnections: nil} // 3
+
+	out1Connections := []*Connection{
+		&Connection{inNeuron: &input1, weight: 1}, // 1.5
+		&Connection{inNeuron: &input2, weight: 1}} // 3
+	out2Connections := []*Connection{
+		&Connection{inNeuron: &input1, weight: 2}, // 3
+		&Connection{inNeuron: &input2, weight: 1}} // 3
+
+	output1 := Neuron{value: 0, bias: 1, biasWeight: 2, inConnections: out1Connections} // 1.625
+	output2 := Neuron{value: 0, bias: 1, biasWeight: 1, inConnections: out2Connections} // 1.75
+
+	net := Net{inputNeurons: []*Neuron{&input1, &input2}, outputNeurons: []*Neuron{&output1, &output2}}
+
+	// when
+	net.calculateOutputs()
+
+	// then
+	assert.Equal(t, 1.625, net.outputNeurons[0].value)
+	assert.Equal(t, 1.75, net.outputNeurons[1].value)
 }
