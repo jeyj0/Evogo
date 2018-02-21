@@ -68,7 +68,7 @@ func resetRecursive(neurons []*Neuron) {
 	}
 }
 
-func (net *Net) calculateOutputs() {
+func (net *Net) CalculateOutputs() {
 	for _, outputNeuron := range net.outputNeurons {
 		outputNeuron.calculateValueRecursive()
 	}

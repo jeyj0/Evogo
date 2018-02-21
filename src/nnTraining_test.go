@@ -14,7 +14,7 @@ func TestCombineSeeds(t *testing.T) {
 	seed2 := []float64{8, 7, 6, 5, 4, 3, 2, 1}
 
 	// when
-	seedsCombined := combineSeeds(seed1, seed2)
+	seedsCombined := CombineSeeds(seed1, seed2)
 
 	// then
 	assert.Equal(t, []float64{8, 7, 6, 5, 4, 6, 2, 8}, seedsCombined)

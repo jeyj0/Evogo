@@ -87,7 +87,7 @@ func TestCalculateOutputs(t *testing.T) {
 	net := Net{inputNeurons: []*Neuron{&input1, &input2}, outputNeurons: []*Neuron{&output1, &output2}}
 
 	// when
-	net.calculateOutputs()
+	net.CalculateOutputs()
 
 	// then
 	assert.Equal(t, 4.3125, net.outputNeurons[0].value)
@@ -112,7 +112,7 @@ func TestCalculateOutputsWithInputBias(t *testing.T) {
 	net := Net{inputNeurons: []*Neuron{&input1, &input2}, outputNeurons: []*Neuron{&output1, &output2}}
 
 	// when
-	net.calculateOutputs()
+	net.CalculateOutputs()
 
 	// then
 	assert.Equal(t, 1.625, net.outputNeurons[0].value)
