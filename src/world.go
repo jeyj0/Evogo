@@ -1,5 +1,9 @@
 package main
 
+import (
+	"math"
+)
+
 type World struct {
 	entities []*Entity
 	width    float64
@@ -13,9 +17,17 @@ type Entity struct {
 	color [3]uint8
 }
 
+type Angle struct {
+	deg float64
+}
+
+func (angle Angle) Rad() float64 {
+	return angle.deg * math.Pi / 180.0
+}
+
 type Actor struct {
 	Entity
-	direction float64
+	direction Angle
 }
 
 type Food struct {
@@ -23,7 +35,10 @@ type Food struct {
 }
 
 func (actor *Actor) Move(amount float64) {
+	actor.x += math.Sin(actor.direction.Rad()) * amount
+	actor.y += math.Cos(actor.direction.Rad()) * amount
 }
 
 func (actor *Actor) Turn(amount float64) {
+	actor.direction.deg = math.Mod(math.Mod((actor.direction.deg+amount), 360)+360, 360)
 }
