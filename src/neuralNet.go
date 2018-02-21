@@ -1,16 +1,18 @@
 package main
 
 type Neuron struct {
-	value         float64
-	bias          float64
-	biasWeight    float64
-	inConnections []*Connection
-	isCalculated  bool
+	value          float64
+	bias           float64
+	biasWeight     float64
+	inConnections  []*Connection
+	outConnections []*Connection
+	isCalculated   bool
 }
 
 type Connection struct {
-	inNeuron *Neuron
-	weight   float64
+	inNeuron  *Neuron
+	outNeuron *Neuron
+	weight    float64
 }
 
 type Net struct {
