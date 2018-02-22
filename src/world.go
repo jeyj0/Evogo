@@ -5,9 +5,10 @@ import (
 )
 
 type World struct {
-	entities []*Entity
-	width    float64
-	height   float64
+	actors []*Actor
+	food   []*Entity
+	width  float64
+	height float64
 }
 
 type Entity struct {
@@ -27,11 +28,8 @@ func (angle Angle) Rad() float64 {
 
 type Actor struct {
 	Entity
+	net       *Net
 	direction Angle
-}
-
-type Food struct {
-	Entity
 }
 
 func (actor *Actor) Move(amount float64) {

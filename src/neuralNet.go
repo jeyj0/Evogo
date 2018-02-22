@@ -69,6 +69,7 @@ func resetRecursive(neurons []*Neuron) {
 }
 
 func (net *Net) CalculateOutputs() {
+	net.reset()
 	for _, outputNeuron := range net.outputNeurons {
 		outputNeuron.calculateValueRecursive()
 	}

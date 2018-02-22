@@ -25,11 +25,13 @@ func (net *Net) FillWeightsAndBiasesFromSeed(seed []float64) {
 	seed = fillWeightsAndBiasesForLayer(layer, seed)
 
 	connections, layer = getConnectionsAndNextLayer(layer)
+	// for seedLen := -1; len(seed) > 0 && len(seed) != seedLen; seedLen = len(seed) {
 	for len(seed) > 0 {
 		seed = fillWeightsForConnections(connections, seed)
 		seed = fillWeightsAndBiasesForLayer(layer, seed)
 		connections, layer = getConnectionsAndNextLayer(layer)
 	}
+	// println(len(seed))
 }
 
 func generateEmptyNeurons(count int) []*Neuron {
