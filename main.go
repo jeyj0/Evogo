@@ -8,6 +8,7 @@ import (
 
 	nn "github.com/jeyj0/Evogo/neuralnet"
 	nng "github.com/jeyj0/Evogo/nngeneration"
+	"github.com/jeyj0/Evogo/websocket"
 	w "github.com/jeyj0/Evogo/world"
 )
 
@@ -15,8 +16,9 @@ const minActors int = 100
 const runs int = 200
 
 func main() {
-	world := createWorld()
-	mainLoop(world)
+	//world := createWorld()
+	//mainLoop(world)
+	websocket.NewInit()
 }
 
 func createWorld() *w.World {
