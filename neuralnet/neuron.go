@@ -11,8 +11,8 @@ type Neuron struct {
 
 func (n *Neuron) calculateValue() {
 	if !n.isCalculated {
-		newValue := 0.0
-		weightSum := 0.0
+		var newValue float64
+		var weightSum float64
 
 		if n.InConnections == nil {
 			newValue = n.Value

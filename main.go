@@ -24,12 +24,12 @@ func createWorld() *w.World {
 
 	actors := []*w.Actor{}
 	for i := 0; i < minActors; i++ {
-		x := 0.0
-		y := 0.0
+		var x float64
+		var y float64
 		net := nng.GenerateFullyConnectedNeuralNet([]int{30, 50, 20})
 		nng.FillWeightsAndBiasesFromSeed(&net, generateSeed(1660))
 
-		actor := w.Actor{Entity: w.Entity{X: x, Y: y, Size: 1}, Direction: w.Angle{0}, Net: &net}
+		actor := w.Actor{Entity: w.Entity{X: x, Y: y, Size: 1}, Direction: w.Angle{}, Net: &net}
 		actors = append(actors, &actor)
 	}
 	world.Actors = actors

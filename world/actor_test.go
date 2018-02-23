@@ -10,7 +10,7 @@ import (
 
 func TestMoveUp(t *testing.T) {
 	// given
-	actor := world.Actor{Entity: world.Entity{X: 0, Y: 0}, Direction: world.Angle{0}}
+	actor := world.Actor{Entity: world.Entity{X: 0, Y: 0}, Direction: world.Angle{}}
 
 	// when
 	actor.Move(1)
@@ -47,7 +47,7 @@ func TestMoveDown(t *testing.T) {
 
 func TestTurn90(t *testing.T) {
 	// given
-	actor := world.Actor{Direction: world.Angle{0}}
+	actor := world.Actor{Direction: world.Angle{}}
 
 	// when
 	actor.Turn(90)
@@ -58,7 +58,7 @@ func TestTurn90(t *testing.T) {
 
 func TestTurn360(t *testing.T) {
 	// given
-	actor := world.Actor{Direction: world.Angle{0}}
+	actor := world.Actor{Direction: world.Angle{}}
 
 	// when
 	actor.Turn(360)
@@ -69,7 +69,7 @@ func TestTurn360(t *testing.T) {
 
 func TestTurnNeg90(t *testing.T) {
 	// given
-	actor := world.Actor{Direction: world.Angle{0}}
+	actor := world.Actor{Direction: world.Angle{}}
 
 	// when
 	actor.Turn(-90)
@@ -80,7 +80,7 @@ func TestTurnNeg90(t *testing.T) {
 
 func TestTurn361(t *testing.T) {
 	// given
-	actor := world.Actor{Direction: world.Angle{0}}
+	actor := world.Actor{Direction: world.Angle{}}
 
 	// when
 	actor.Turn(361)
@@ -91,7 +91,7 @@ func TestTurn361(t *testing.T) {
 
 func TestTurnNeg361(t *testing.T) {
 	// given
-	actor := world.Actor{Direction: world.Angle{0}}
+	actor := world.Actor{Direction: world.Angle{}}
 
 	// when
 	actor.Turn(-361)
