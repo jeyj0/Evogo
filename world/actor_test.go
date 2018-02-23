@@ -1,14 +1,16 @@
-package world
+package world_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	world "github.com/jeyj0/Evogo/world"
 )
 
 func TestMoveUp(t *testing.T) {
 	// given
-	actor := Actor{Entity: Entity{X: 0, Y: 0}, Direction: Angle{0}}
+	actor := world.Actor{Entity: world.Entity{X: 0, Y: 0}, Direction: world.Angle{0}}
 
 	// when
 	actor.Move(1)
@@ -20,7 +22,7 @@ func TestMoveUp(t *testing.T) {
 
 func TestMoveUpRight(t *testing.T) {
 	// given
-	actor := Actor{Entity: Entity{X: 0, Y: 0}, Direction: Angle{45}}
+	actor := world.Actor{Entity: world.Entity{X: 0, Y: 0}, Direction: world.Angle{45}}
 
 	// when
 	actor.Move(1)
@@ -32,7 +34,7 @@ func TestMoveUpRight(t *testing.T) {
 
 func TestMoveDown(t *testing.T) {
 	// given
-	actor := Actor{Entity: Entity{X: 0, Y: 0}, Direction: Angle{180}}
+	actor := world.Actor{Entity: world.Entity{X: 0, Y: 0}, Direction: world.Angle{180}}
 
 	// when
 	actor.Move(1)
@@ -45,7 +47,7 @@ func TestMoveDown(t *testing.T) {
 
 func TestTurn90(t *testing.T) {
 	// given
-	actor := Actor{Direction: Angle{0}}
+	actor := world.Actor{Direction: world.Angle{0}}
 
 	// when
 	actor.Turn(90)
@@ -56,7 +58,7 @@ func TestTurn90(t *testing.T) {
 
 func TestTurn360(t *testing.T) {
 	// given
-	actor := Actor{Direction: Angle{0}}
+	actor := world.Actor{Direction: world.Angle{0}}
 
 	// when
 	actor.Turn(360)
@@ -67,7 +69,7 @@ func TestTurn360(t *testing.T) {
 
 func TestTurnNeg90(t *testing.T) {
 	// given
-	actor := Actor{Direction: Angle{0}}
+	actor := world.Actor{Direction: world.Angle{0}}
 
 	// when
 	actor.Turn(-90)
@@ -78,7 +80,7 @@ func TestTurnNeg90(t *testing.T) {
 
 func TestTurn361(t *testing.T) {
 	// given
-	actor := Actor{Direction: Angle{0}}
+	actor := world.Actor{Direction: world.Angle{0}}
 
 	// when
 	actor.Turn(361)
@@ -89,7 +91,7 @@ func TestTurn361(t *testing.T) {
 
 func TestTurnNeg361(t *testing.T) {
 	// given
-	actor := Actor{Direction: Angle{0}}
+	actor := world.Actor{Direction: world.Angle{0}}
 
 	// when
 	actor.Turn(-361)
