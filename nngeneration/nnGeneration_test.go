@@ -1,9 +1,10 @@
-package nngeneration
+package nngeneration_test
 
 import (
 	"testing"
 
 	nn "github.com/jeyj0/Evogo/neuralnet"
+	nng "github.com/jeyj0/Evogo/nngeneration"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,7 +18,7 @@ func TestGenerateFullyConnectedNeuralNet1x1(t *testing.T) {
 	fullyConnected1x1 := nn.Net{InputNeurons: []*nn.Neuron{&input}, OutputNeurons: []*nn.Neuron{&output}}
 
 	// when
-	generated1x1 := GenerateFullyConnectedNeuralNet([]int{1, 1})
+	generated1x1 := nng.GenerateFullyConnectedNeuralNet([]int{1, 1})
 
 	// then
 	assert.Equal(t, fullyConnected1x1, generated1x1)
@@ -36,7 +37,7 @@ func TestGenerateFullyConnectedNeuralNet1x2(t *testing.T) {
 	fullyConnected1x2 := nn.Net{InputNeurons: []*nn.Neuron{&input}, OutputNeurons: []*nn.Neuron{&out1, &out2}}
 
 	// when
-	generated1x2 := GenerateFullyConnectedNeuralNet([]int{1, 2})
+	generated1x2 := nng.GenerateFullyConnectedNeuralNet([]int{1, 2})
 
 	// then
 	assert.Equal(t, fullyConnected1x2, generated1x2)
@@ -55,7 +56,7 @@ func TestGenerateFullyConnectedNeuralNet2x1(t *testing.T) {
 	fullyConnected2x1 := nn.Net{InputNeurons: []*nn.Neuron{&input1, &input2}, OutputNeurons: []*nn.Neuron{&output}}
 
 	// when
-	generated2x1 := GenerateFullyConnectedNeuralNet([]int{2, 1})
+	generated2x1 := nng.GenerateFullyConnectedNeuralNet([]int{2, 1})
 
 	// then
 	assert.Equal(t, fullyConnected2x1, generated2x1)
@@ -75,7 +76,7 @@ func TestGenerateFullyConnectedNeuralNet1x1x1(t *testing.T) {
 	fullyConnected1x1x1 := nn.Net{InputNeurons: []*nn.Neuron{&input}, OutputNeurons: []*nn.Neuron{&output}}
 
 	// when
-	generated1x1x1 := GenerateFullyConnectedNeuralNet([]int{1, 1, 1})
+	generated1x1x1 := nng.GenerateFullyConnectedNeuralNet([]int{1, 1, 1})
 
 	// then
 	assert.Equal(t, 1, len(generated1x1x1.InputNeurons), "A 1x1x1 Net should have 1 input neuron")
@@ -90,7 +91,7 @@ func TestGenerateFullyConnectedNeuralNet2x2x2(t *testing.T) {
 	fullyConnected2x2x2 := givenFullyConnected2x2x2()
 
 	// when
-	generated2x2x2 := GenerateFullyConnectedNeuralNet([]int{2, 2, 2})
+	generated2x2x2 := nng.GenerateFullyConnectedNeuralNet([]int{2, 2, 2})
 
 	// then
 	assert.Equal(t, fullyConnected2x2x2, generated2x2x2)
@@ -132,8 +133,8 @@ func TestFillWeightsAndBiasesFromSeed(t *testing.T) {
 	fullyConnected2x2x2 := givenFullyConnectedAndBiasWeightFilled2x2x2()
 
 	// when
-	filled2x2x2 := GenerateFullyConnectedNeuralNet([]int{2, 2, 2})
-	FillWeightsAndBiasesFromSeed(&filled2x2x2, seed)
+	filled2x2x2 := nng.GenerateFullyConnectedNeuralNet([]int{2, 2, 2})
+	nng.FillWeightsAndBiasesFromSeed(&filled2x2x2, seed)
 
 	// then
 	assert.Equal(t, fullyConnected2x2x2, filled2x2x2)
