@@ -1,10 +1,12 @@
-package nntraining
+package nntraining_test
 
 import (
 	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	nnt "github.com/jeyj0/Evogo/nntraining"
 )
 
 func TestCombineSeeds(t *testing.T) {
@@ -14,7 +16,7 @@ func TestCombineSeeds(t *testing.T) {
 	seed2 := []float64{8, 7, 6, 5, 4, 3, 2, 1}
 
 	// when
-	seedsCombined := CombineSeeds(seed1, seed2)
+	seedsCombined := nnt.CombineSeeds(seed1, seed2)
 
 	// then
 	assert.Equal(t, []float64{8, 7, 6, 5, 4, 6, 2, 8}, seedsCombined)
