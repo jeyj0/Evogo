@@ -1,4 +1,4 @@
-package main
+package nntraining
 
 import (
 	"math/rand"

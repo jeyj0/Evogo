@@ -5,6 +5,10 @@ import (
 	"math/rand"
 	"sync"
 	"time"
+
+	nn "github.com/jeyj0/Evogo/neuralnet"
+	nng "github.com/jeyj0/Evogo/nngeneration"
+	w "github.com/jeyj0/Evogo/world"
 )
 
 const minActors int = 100
@@ -15,20 +19,20 @@ func main() {
 	mainLoop(world)
 }
 
-func createWorld() *World {
-	world := World{width: 100, height: 100}
+func createWorld() *w.World {
+	world := w.World{Width: 100, Height: 100}
 
-	actors := []*Actor{}
+	actors := []*w.Actor{}
 	for i := 0; i < minActors; i++ {
 		x := 0.0
 		y := 0.0
-		net := GenerateFullyConnectedNeuralNet([]int{30, 50, 20})
-		net.FillWeightsAndBiasesFromSeed(generateSeed(1660))
+		net := nng.GenerateFullyConnectedNeuralNet([]int{30, 50, 20})
+		nng.FillWeightsAndBiasesFromSeed(&net, generateSeed(1660))
 
-		actor := Actor{Entity: Entity{x: x, y: y, size: 1}, direction: Angle{0}, net: &net}
+		actor := w.Actor{Entity: w.Entity{X: x, Y: y, Size: 1}, Direction: w.Angle{0}, Net: &net}
 		actors = append(actors, &actor)
 	}
-	world.actors = actors
+	world.Actors = actors
 
 	return &world
 }
@@ -41,46 +45,46 @@ func generateSeed(length int) []float64 {
 	return seed
 }
 
-func mainLoop(world *World) {
+func mainLoop(world *w.World) {
 	start := time.Now()
 	for i := 0; i < runs; i++ {
-		letActorsActSync(world.actors)
+		letActorsActSync(world.Actors)
 	}
 	delta := time.Now().Sub(start).Seconds()
 	fmt.Println("Duration (sync)  :", delta, "seconds | FPS:", float64(runs)/delta)
 
 	start = time.Now()
 	for i := 0; i < runs; i++ {
-		letActorsActChrono(world.actors)
+		letActorsActChrono(world.Actors)
 	}
 	delta = time.Now().Sub(start).Seconds()
 	fmt.Println("Duration (chrono):", delta, "seconds | FPS:", float64(runs)/delta)
 }
 
-func letActorsActSync(actors []*Actor) {
+func letActorsActSync(actors []*w.Actor) {
 
 	waitGroup := new(sync.WaitGroup)
 
 	for _, actor := range actors {
 		waitGroup.Add(1)
-		go func(net *Net) {
+		go func(net *nn.Net) {
 			defer waitGroup.Done()
 
-			for _, n := range net.inputNeurons {
-				n.value = rand.Float64()
+			for _, n := range net.InputNeurons {
+				n.Value = rand.Float64()
 			}
 			net.CalculateOutputs()
-		}(actor.net)
+		}(actor.Net)
 	}
 
 	waitGroup.Wait()
 }
 
-func letActorsActChrono(actors []*Actor) {
+func letActorsActChrono(actors []*w.Actor) {
 	for _, actor := range actors {
-		for _, n := range actor.net.inputNeurons {
-			n.value = rand.Float64()
+		for _, n := range actor.Net.InputNeurons {
+			n.Value = rand.Float64()
 		}
-		actor.net.CalculateOutputs()
+		actor.Net.CalculateOutputs()
 	}
 }
