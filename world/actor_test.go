@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	world "github.com/jeyj0/Evogo/world"
+	"github.com/jeyj0/Evogo/world"
 )
 
 func TestMoveUp(t *testing.T) {
