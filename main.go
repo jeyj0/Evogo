@@ -18,7 +18,7 @@ const runs int = 200
 func main() {
 	//world := createWorld()
 	//mainLoop(world)
-	websocket.NewInit()
+	websocket.Init()
 }
 
 func createWorld() *w.World {

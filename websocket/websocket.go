@@ -15,7 +15,7 @@ type Socket struct {
 	message string
 }
 
-func NewInit() {
+func Init() {
 	socket := Socket{clients: []*gorillaWs.Conn{}}
 
 	http.HandleFunc("/", rootHandler)
@@ -56,14 +56,14 @@ func serveWebSocket(socket *Socket, w http.ResponseWriter, r *http.Request) {
 	socket.clients = append(socket.clients, conn)
 }
 
-func (socket Socket) broadcast() {
+func (socket *Socket) broadcast() {
 	for _, client := range socket.clients {
-		go func(client *gorillaWs.Conn) {
+		go func(socket *Socket, client *gorillaWs.Conn) {
 			err := client.WriteJSON(socket.message)
 			if err != nil {
 				socket.removeClient(client)
 			}
-		}(client)
+		}(socket, client)
 	}
 }
 
