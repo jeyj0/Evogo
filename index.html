@@ -24,7 +24,8 @@
                     container.innerText = "Socket is open\n";
                 };
                 socket.onmessage = function (e) {
-                    dataContainer.innerText = e.data;
+                    const json = JSON.parse(e.data);
+                    console.log(json);
                 }
                 socket.onclose = function () {
                     container.innerText = "Socket closed\n";

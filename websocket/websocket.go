@@ -51,9 +51,10 @@ func serveWebSocket(socket *Socket, w http.ResponseWriter, r *http.Request) {
 }
 
 func (socket *Socket) broadcast() {
+	msg := []byte(socket.Message)
 	for _, client := range socket.clients {
 		go func(socket *Socket, client *gorillaWs.Conn) {
-			err := client.WriteJSON(socket.Message)
+			err := client.WriteMessage(gorillaWs.TextMessage, msg)
 			if err != nil {
 				socket.removeClient(client)
 			}
