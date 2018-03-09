@@ -1,20 +1,12 @@
 <html>
+
 <head>
     <title>WebSocket demo</title>
 </head>
-<body>
 
-    <div>
-        <form>
-            <label for="numberfield">Number</label>
-            <input type="text" id="numberfield" placeholder="12"/><br />
-            <button type="button" id="sendBtn">Send</button>
-        </form>
-    </div>
+<body>
     <div id="container"></div>
     <div id="data"></div>
-
-    <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
     <script type="text/javascript">
         window.onload = function () {
             var ws;
@@ -28,7 +20,7 @@
                 var socket = new WebSocket("ws://localhost:2345/ws"),
                     container = document.getElementById("container"),
                     dataContainer = document.getElementById("data");
-                socket.onopen = function() {
+                socket.onopen = function () {
                     container.innerText = "Socket is open\n";
                 };
                 socket.onmessage = function (e) {
@@ -39,11 +31,8 @@
                 }
                 return socket;
             }
-            document.getElementById("sendBtn").onclick = e => {
-                e.preventDefault();
-                ws.send(JSON.stringify({ Num: parseInt(document.getElementById("numberfield").value) }));
-            };
         };
     </script>
 </body>
+
 </html>

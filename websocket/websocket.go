@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 	"time"
 
 	gorillaWs "github.com/gorilla/websocket"
@@ -12,10 +11,10 @@ import (
 
 type Socket struct {
 	clients []*gorillaWs.Conn
-	message string
+	Message string
 }
 
-func Init() {
+func Init() *Socket {
 	socket := Socket{clients: []*gorillaWs.Conn{}}
 
 	http.HandleFunc("/", rootHandler)
@@ -30,16 +29,11 @@ func Init() {
 		}
 	}(&socket)
 
-	go func(socket *Socket) {
-		counter := 0
-		for {
-			socket.message = strconv.Itoa(counter)
-			time.Sleep(2000 * time.Millisecond)
-			counter++
-		}
-	}(&socket)
+	go func() {
+		panic(http.ListenAndServe(":2345", nil))
+	}()
 
-	panic(http.ListenAndServe(":2345", nil))
+	return &socket
 }
 
 var upgrader = gorillaWs.Upgrader{
@@ -59,7 +53,7 @@ func serveWebSocket(socket *Socket, w http.ResponseWriter, r *http.Request) {
 func (socket *Socket) broadcast() {
 	for _, client := range socket.clients {
 		go func(socket *Socket, client *gorillaWs.Conn) {
-			err := client.WriteJSON(socket.message)
+			err := client.WriteJSON(socket.Message)
 			if err != nil {
 				socket.removeClient(client)
 			}

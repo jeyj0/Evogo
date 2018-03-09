@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"sync"
-	"time"
 
 	nn "github.com/jeyj0/Evogo/neuralnet"
 	nng "github.com/jeyj0/Evogo/nngeneration"
@@ -16,9 +14,9 @@ const minActors int = 100
 const runs int = 200
 
 func main() {
-	//world := createWorld()
-	//mainLoop(world)
-	websocket.Init()
+	world := createWorld()
+	ws := websocket.Init()
+	mainLoop(world, ws)
 }
 
 func createWorld() *w.World {
@@ -47,20 +45,15 @@ func generateSeed(length int) []float64 {
 	return seed
 }
 
-func mainLoop(world *w.World) {
-	start := time.Now()
+func mainLoop(world *w.World, socket *websocket.Socket) {
+	dataJSON := "{}"
 	for i := 0; i < runs; i++ {
 		letActorsActSync(world.Actors)
-	}
-	delta := time.Now().Sub(start).Seconds()
-	fmt.Println("Duration (sync)  :", delta, "seconds | FPS:", float64(runs)/delta)
 
-	start = time.Now()
-	for i := 0; i < runs; i++ {
-		letActorsActChrono(world.Actors)
+		dataJSON = world.ToJSON()
+
+		socket.Message = dataJSON
 	}
-	delta = time.Now().Sub(start).Seconds()
-	fmt.Println("Duration (chrono):", delta, "seconds | FPS:", float64(runs)/delta)
 }
 
 func letActorsActSync(actors []*w.Actor) {
